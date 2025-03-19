@@ -1,0 +1,33 @@
+# Environnements virtuels
+venv/
+env/
+
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers de configuration personnels
+*.env
+
+# Fichiers et bases de données de Django
+*.log
+db.sqlite3
+*.sqlite3-journal
+
+# Fichiers statiques générés (si collectstatic est utilisé)
+staticfiles/
+
+# Répertoires de caches et fichiers temporaires
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Fichiers d’OS
+.DS_Store
+Thumbs.db
+
+# Répertoires spécifiques aux éditeurs
+.vscode/
+.idea/
