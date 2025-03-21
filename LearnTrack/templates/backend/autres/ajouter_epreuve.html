@@ -1,0 +1,200 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .custom-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    .custom-card:hover {
+        transform: translateY(-5px);
+    }
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+        border-color: #3498db;
+    }
+    .input-group {
+        transition: transform 0.3s ease;
+    }
+    .input-group:hover {
+        transform: scale(1.02);
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+
+    /* Style pour les messages */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
+    .toast {
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+    .toast-header {
+        background-color: #3498db;
+        color: white;
+        font-weight: 600;
+    }
+    .toast-body {
+        font-size: 14px;
+    }
+    .animate__animated {
+        animation-duration: 0.5s;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="custom-card p-4 p-md-5 mx-auto" style="max-width: 800px;">
+        <h2 class="text-center mb-4 animate__animated animate__fadeInDown">
+            <i class="fas fa-upload me-2"></i> Ajouter un document
+        </h2>
+
+        <!-- Formulaire -->
+        <form action="{% url 'add_course' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-4">
+                <!-- Matière -->
+                <div class="col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-book"></i></span>
+                        <input type="text" class="form-control form-control-lg" name="matiere"
+                            placeholder="Matière du document" required>
+                    </div>
+                </div>
+
+                <!-- Filière -->
+                <div class="col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
+                        <input type="text" class="form-control form-control-lg" name="filiere"
+                            placeholder="Entrer la filière concernée" required>
+                    </div>
+                </div>
+
+                <!-- Spécialité -->
+                <div class="col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-flask"></i></span>
+                        <input type="text" class="form-control form-control-lg" name="specialite"
+                            placeholder="Entrer la spécialité concernée" required>
+                    </div>
+                </div>
+
+                <!-- Type de document -->
+                <div class="col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.8s;">
+                    <label class="form-label"><i class="fas fa-folder me-2"></i>Type de document</label>
+                    <select class="form-select" name="type" required>
+                        <option value="epreuve_corrigee">Épreuve corrigée</option>
+                        <option value="epreuve_non_corrigee">Épreuve non corrigée</option>
+                    </select>
+                </div>
+
+                <!-- Téléchargement -->
+                <div class="col-12 animate__animated animate__fadeInUp" style="animation-delay: 1s;">
+                    <label class="form-label"><i class="fas fa-file-upload me-2"></i> Téléchargement</label>
+                    <div class="upload-area text-center py-4 position-relative">
+                        <input type="file" class="form-control" name="file" 
+                               required style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%; cursor: pointer;">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                            <h5 class="mb-2">Glissez votre fichier ici ou cliquez pour sélectionner</h5>
+                            <p class="text-muted small mb-0">Formats supportés: PDF, DOCX, PPTX (Max 25MB)</p>
+                        </div>
+                    </div>
+                    <div id="fileName" class="mt-2 text-muted small"></div>
+                </div>
+
+                <!-- Bouton de soumission -->
+                <div class="col-12 animate__animated animate__fadeInUp" style="animation-delay: 1.2s;">
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">
+                        <i class="fas fa-paper-plane me-2"></i> Ajouter le document
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Affichage des messages sous forme de toast -->
+{% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+            <div class="toast animate__animated animate__fadeInRight" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong class="me-auto">Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<script>
+    // Affichage du nom de fichier
+    const fileInput = document.querySelector('input[name="file"]');
+    const fileName = document.getElementById('fileName');
+    
+    fileInput.addEventListener('change', function(e) {
+        if(this.files && this.files.length > 0) {
+            fileName.textContent = 'Fichier sélectionné: ' + this.files[0].name;
+        }
+    });
+
+    // Drag & drop
+    const uploadArea = document.querySelector('.upload-area');
+    
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderStyle = 'solid';
+        uploadArea.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderStyle = 'dashed';
+        uploadArea.style.backgroundColor = '';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileInput.files = e.dataTransfer.files;
+        uploadArea.style.borderStyle = 'dashed';
+        uploadArea.style.backgroundColor = '';
+        fileName.textContent = 'Fichier sélectionné: ' + e.dataTransfer.files[0].name;
+    });
+
+    // Affichage des toasts après ajout des messages
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastElements = document.querySelectorAll('.toast');
+        toastElements.forEach(function (toastElement) {
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        });
+    });
+</script>
+
+{% endblock %}

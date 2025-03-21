@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LearnTrack Admin Dashboard</title>
+
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'backend/css/style.css' %}?v=1">
+    <html>
+
+<body>
+    <!-- Top Navbar -->
+    <nav class="main-navbar navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <button class="navbar-toggler text-white" type="button" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand text-white fw-bold animate__animated animate__fadeInLeft" href="#">LearnTrack
+                Admin</a>
+            <div class="d-flex align-items-center w-50">
+                <!-- Barre de recherche avec icône -->
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-0" id="searchIcon">
+                        <i class="fas fa-search text-muted"></i>
+                    </span>
+                    <input type="text" class="form-control border-0" placeholder="Recherche..." aria-label="Recherche"
+                        aria-describedby="searchIcon">
+                </div>
+            </div>
+            <div class="d-flex align-items-center mx-3">
+                <!-- Notification Bell -->
+                <div class="notification-bell me-3">
+                    <i class="fas fa-bell text-white fs-5"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <!-- Profile Picture -->
+                <img src="profile.jpg" alt="Profile" class="profile-picture rounded-circle" data-bs-toggle="dropdown">
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i>Paramètres</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="#"><i
+                                class="fas fa-sign-out-alt me-2"></i>Déconnexion</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <nav class="nav flex-column p-3">
+                <!-- Dashboard -->
+                <a class="nav-link animate__animated animate__fadeInLeft" href="#">
+                    <i class="fas fa-tachometer-alt me-2 text-primary"></i>Dashboard
+                </a>
+
+                <!-- Accueil -->
+                <a class="nav-link animate__animated animate__fadeInLeft" href="#">
+                    <i class="fas fa-home me-2 text-primary"></i>Accueil
+                </a>
+
+                <!-- Gestion des utilisateurs -->
+                <a class="nav-link animate__animated animate__fadeInLeft delay-1" href="#" data-bs-toggle="collapse"
+                    data-bs-target="#userManagement" aria-expanded="false" aria-controls="userManagement">
+                    <i class="fas fa-users me-2 text-primary"></i>Gestion des utilisateurs
+                </a>
+                <div class="collapse" id="userManagement">
+                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="#">
+                        <i class="fas fa-user-plus me-2 text-primary"></i>Ajouter un utilisateur
+                    </a>
+                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="#">
+                        <i class="fas fa-history me-2 text-primary"></i>Voir l'historique
+                    </a>
+                </div>
+
+                <!-- Gestion des cours -->
+                <a class="nav-link animate__animated animate__fadeInLeft delay-2" href="#" data-bs-toggle="collapse"
+                    data-bs-target="#courseManagement" aria-expanded="false" aria-controls="courseManagement">
+                    <i class="fas fa-chalkboard-teacher me-2 text-primary"></i>Gestion des cours
+                </a>
+                <div class="collapse" id="courseManagement">
+                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="#">
+                        <i class="fas fa-plus-circle me-2 text-primary"></i>Ajouter un cours
+                    </a>
+                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="#">
+                        <i class="fas fa-list me-2 text-primary"></i>Voir les cours
+                    </a>
+                </div>
+
+                <!-- Gestion des épreuves -->
+                <a class="nav-link animate__animated animate__fadeInLeft delay-2" href="#" data-bs-toggle="collapse"
+                    data-bs-target="#examManagement" aria-expanded="false" aria-controls="examManagement">
+                    <i class="fas fa-clipboard-list me-2 text-primary"></i>Gestion des épreuves
+                </a>
+                <div class="collapse" id="examManagement">
+                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="{% url 'add_course' %}">
+                        <i class="fas fa-plus-circle me-2 text-primary"></i>Ajouter une épreuve
+                    </a>
+                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="{% url 'historique_epreuve' %}">
+                        <i class="fas fa-list me-2 text-primary"></i>Voir les épreuves
+                    </a>
+                </div>
+
+                <!-- Autres options -->
+                <a class="nav-link animate__animated animate__fadeInLeft delay-3" href="#">
+                    <i class="fas fa-cogs me-2 text-primary"></i>Paramètres
+                </a>
+                <a class="btn btn-primary animate__animated animate__fadeInLeft delay-3" href="#">
+                    <i class="fas fa-sign-in-alt me-2 text-light"></i>Inscription
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'backend/js/javascript.js' %}?v=1"></script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+{% extends 'backend/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* Style pour les messages */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
+
+    .toast {
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .toast-header {
+        background-color: #3498db;
+        color: white;
+        font-weight: 600;
+    }
+
+    .toast-body {
+        font-size: 14px;
+    }
+
+    .animate__animated {
+        animation-duration: 0.5s;
+    }
+</style>
+
+<div class="bg-light">
+    <div class="container py-5">
+        <!-- Titre et Détails -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold animate__animated animate__fadeInDown"><i class="fas fa-history me-2"></i>Historique des
+                Épreuves</h2>
+            <p class="text-muted animate__animated animate__fadeIn animate__delay-1s">Retrouvez ici toutes les épreuves
+                ajoutées sur la plateforme.</p>
+        </div>
+
+        <!-- Bouton "Ajouter une épreuve" aligné à droite -->
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{% url 'add_course' %}" class="btn btn-success"><i class="fas fa-plus me-2"></i>Ajouter une
+                épreuve</a>
+        </div>
+
+        <!-- Tableau Responsive -->
+        <div class="card custom-card p-4 animate__animated animate__fadeInUp">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col"><i class="fas fa-file-alt me-2"></i>Titre</th>
+                            <th scope="col"><i class="fas fa-graduation-cap me-2"></i>Filière</th>
+                            <th scope="col"><i class="fas fa-flask me-2"></i>Spécialité</th>
+                            <th scope="col"><i class="fas fa-book me-2"></i>Matière</th>
+                            <th scope="col"><i class="fas fa-folder me-2"></i>Type</th>
+                            <th scope="col"><i class="fas fa-calendar-alt me-2"></i>Date</th>
+                            <th scope="col"><i class="fas fa-cogs me-2"></i>Actions</th>
+                        </tr>
+                    </thead>
+                    {% for doc in documents %}
+                    <tbody>
+                        <tr class="animate-table-row" style="animation-delay: 0.2s;">
+                            <td>{{ doc.id }}</td>
+                            <td>{{ doc.title }}</td>
+                            <td>{{ doc.filiere }}</td>
+                            <td>{{ doc.specialite }}</td>
+                            <td>{{ doc.matiere }}</td>
+                            <td>
+                                {% if doc.type_document == "epreuve_corrigee" %}
+                                <span class="badge bg-success">Épreuve corrigée</span>
+                                {% else %}
+                                <span class="badge bg-danger">Épreuve non corrigée</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ doc.date|date:"d M Y" }}</td>
+                            <td class="d-inline-flex">
+                                <a href="{% url 'update_document' doc.id %}" class="btn btn-sm btn-primary"><i
+                                        class="fas fa-edit"></i> Modifier</a>
+                                <a href="{% url 'delete_document' doc.id %}" class="btn btn-sm btn-danger"><i
+                                        class="fas fa-trash"></i> Supprimer</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">Aucune épreuve disponible</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Affichage des messages sous forme de toast -->
+{% if messages %}
+<div class="toast-container">
+    {% for message in messages %}
+    <div class="toast animate__animated animate__fadeInRight" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+    // Animation des lignes du tableau
+    document.addEventListener('DOMContentLoaded', function () {
+        const rows = document.querySelectorAll('.animate-table-row');
+        rows.forEach((row, index) => {
+            row.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+
+    // Affichage des toasts après ajout des messages
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastElements = document.querySelectorAll('.toast');
+        toastElements.forEach(function (toastElement) {
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        });
+    });
+</script>
+
+{% endblock %}

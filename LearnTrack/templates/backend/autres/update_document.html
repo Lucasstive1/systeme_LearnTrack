@@ -1,0 +1,115 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container-fluid py-5 bg-light">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <div class="card shadow border-0 animate__animated animate__fadeInUp">
+                <div class="card-header bg-primary text-white py-3">
+                    <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Modifier l'épreuve</h3>
+                </div>
+                
+                <div class="card-body px-4 py-4">
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="matiere" name="matiere" 
+                                           value="{{ document.matiere }}" placeholder="Matière">
+                                    <label for="matiere"><i class="fas fa-book-open me-2 text-muted"></i>Matière</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <!-- Filière & Spécialité -->
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="filiere" name="filiere" 
+                                           value="{{ document.filiere }}" placeholder="Filière">
+                                    <label for="filiere"><i class="fas fa-university me-2 text-muted"></i>Filière</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="specialite" name="specialite" 
+                                           value="{{ document.specialite }}" placeholder="Spécialité">
+                                    <label for="specialite"><i class="fas fa-graduation-cap me-2 text-muted"></i>Spécialité</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <select class="form-select" id="type" name="type">
+                                        <option value="epreuve_corrigee" {% if document.type_document == 'epreuve_corrigee' %}selected{% endif %}>
+                                            Épreuve corrigée
+                                        </option>
+                                        <option value="epreuve_non_corrigee" {% if document.type_document == 'epreuve_non_corrigee'%}selected{% endif %}>
+                                            Épreuve non corrigée
+                                        </option>
+                                    </select>
+                                    <label for="type"><i class="fas fa-tag me-2 text-muted"></i>Type</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fichier Upload -->
+                        <div class="mb-4">
+                            <label class="form-label"><i class="fas fa-file-pdf me-2 text-muted"></i>Fichier PDF</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="file" name="file" accept=".pdf">
+                                {% if document.file %}
+                                <a href="{{ document.file.url }}" target="_blank" 
+                                   class="btn btn-outline-success" 
+                                   data-bs-toggle="tooltip" 
+                                   title="Voir le fichier actuel">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                            <small class="form-text text-muted">Format accepté: .pdf (max 5MB)</small>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Enregistrer les modifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card {
+        border-radius: 1rem;
+        transition: transform 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .form-floating label {
+        padding-left: 2.5rem;
+    }
+    .form-floating i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 5;
+    }
+</style>
+{% endblock %}
