@@ -1,0 +1,777 @@
+ /* === STYLES DE BASE === */
+ body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* === STYLES DE LA BARRE DE NAVIGATION AMÉLIORÉE ET BIEN ESPACÉE === */
+.navbar {
+    background-color: #007bff; /* Couleur bleue préservée */
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.navbar-container {
+    padding: 12px 0;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Effet de scroll */
+.navbar.scrolled {
+    padding: 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.navbar.scrolled .navbar-container {
+    padding: 8px 0;
+}
+
+/* Style du logo et du titre */
+.navbar-brand {
+    color: white;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+    padding: 0 20px 0 0;
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+    border-right: 1px solid rgba(7, 61, 241, 0.15);
+}
+
+.navbar-brand i {
+    margin-right: 12px;
+    font-size: 1.7rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-brand:hover {
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.navbar-brand:hover i {
+    transform: rotate(-5deg);
+}
+
+/* Conteneur pour les sections de la navbar */
+.navbar-sections {
+    display: flex;
+    justify-content: space-between; /* Distribue l'espace entre les éléments */
+    align-items: center;
+}
+
+/* Section Navigation */
+.nav-section {
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
+}
+
+/* Styles des liens de navigation */
+.navbar-nav {
+    margin-left: 0; /* Supprime la marge par défaut */
+}
+
+.navbar-nav .nav-item {
+    margin: 0 8px;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px 15px;
+    position: relative;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+    border-radius: 5px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fff;
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Animation de soulignement pour les liens actifs */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffc107;
+    transition: width 0.3s;
+    border-radius: 2px;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+    width: 80%;
+}
+
+/* Section Recherche */
+.search-section {
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    padding-right: 20px;
+    margin-right: 20px;
+}
+
+/* Style du champ de recherche amélioré */
+.navbar-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search input {
+    padding: 10px 15px 10px 42px;
+    border-radius: 30px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    width: 220px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.navbar-search input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.navbar-search input:focus {
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    width: 260px;
+    outline: none;
+}
+
+.navbar-search i {
+    position: absolute;
+    left: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.navbar-search input:focus + i {
+    color: white;
+}
+
+/* Section Authentification */
+.auth-section {
+    display: flex;
+    align-items: center;
+}
+
+/* Styles spécifiques pour boutons de connexion/inscription */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.btn-navbar {
+    padding: 10px 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    margin: 0 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border: none;
+    color: white;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-login {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-signup {
+    background-color: #28a745;
+}
+
+.btn-login:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-signup:hover {
+    background-color: #2dbb4e;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: white;
+    text-decoration: none;
+}
+
+/* Style du toggle pour le menu mobile */
+.navbar-toggler {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    margin-right: 10px;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Adaptations pour mobile */
+@media (max-width: 991.98px) {
+    .navbar-brand {
+        border-right: none;
+        padding-right: 0;
+    }
+
+    .navbar-sections {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-section, .search-section, .auth-section {
+        width: 100%;
+        margin: 10px 0;
+        padding: 0;
+        border: none;
+    }
+
+    .navbar-nav {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 5px 0;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 12px 15px;
+        width: 100%;
+        display: block;
+    }
+
+    .navbar-search {
+        width: 100%;
+    }
+
+    .navbar-search input {
+        width: 100%;
+    }
+
+    .navbar-search input:focus {
+        width: 100%;
+    }
+
+    .auth-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-navbar {
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* === STYLES DE L'IMAGE DE FOND ET DU TEXTE D'ACCUEIL === */
+.background-image {
+    background-image: url('screnim.jpg'); /* Image de fond */
+    background-size: cover;
+    background-position: center;
+    height: 500px; /* Hauteur augmentée pour plus d'impact */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 0;
+}
+
+.background-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)); /* Dégradé amélioré */
+    z-index: 1;
+}
+
+/* Styles améliorés pour le texte d'accueil */
+.welcome-text {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Titre H1 amélioré pour un aspect plus professionnel */
+.welcome-text h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem; /* Taille augmentée */
+    font-weight: 700;
+    color: white; /* Contraste amélioré */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    letter-spacing: 1px;
+    line-height: 1.2;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+/* Ajout d'une ligne décorative sous le titre */
+.welcome-text h1::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+}
+
+/* Paragraphe amélioré avec une meilleure lisibilité */
+.welcome-text p {
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    margin: 15px auto 0;
+    line-height: 1.6;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* === STYLES DES BOUTONS === */
+.navbar form .btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.navbar form .btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* === STYLES DU PIED DE PAGE === */
+footer {
+    background: linear-gradient(135deg, #343a40, #212529);
+    color: white;
+    padding: 30px 0 20px;
+    margin-top: auto;
+    text-align: center;
+}
+
+footer h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #FFD700;
+    font-weight: 600;
+}
+
+footer a {
+    color: #FFD700;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-3px);
+}
+
+.social-icons {
+    margin: 0px 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.icon-container {
+    margin: 0 60px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.icon-container:hover {
+    transform: translateY(-5px);
+}
+
+.social-icons a {
+    color: white;
+    font-size: 4rem;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.social-icons a:hover {
+    transform: scale(1.1) rotate(-10deg); /* Ajout d'une légère rotation au survol */
+    color: #ffc107;
+}
+
+.description {
+    color: white;
+    font-size: 1rem;
+    margin-top: 5px;
+    line-height: 1.2;
+    max-width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+/* === STYLES DE LA SECTION TÉMOIGNAGES === */
+.testimonials {
+    padding: 60px 0; /* Augmentation du padding */
+    background-color: #f8f9fa;
+}
+
+.testimonials h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.testimonials h2::after {
+    content: '';
+    position: absolute;
+    width: 70px;
+    height: 3px;
+    background: #007bff;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+}
+
+/* Style amélioré pour les cartes de témoignage avec animation de rotation vers la gauche */
+.testimonial-card {
+    margin: 20px;
+    padding: 25px;
+    border: none;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.testimonial-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px) rotate(-3deg); /* Rotation vers la gauche au survol */
+}
+
+.testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: #007bff;
+    border-radius: 3px 0 0 3px;
+}
+
+.testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 3px solid #007bff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover .testimonial-img {
+    transform: scale(1.1) rotate(-10deg); /* Rotation de l'image au survol */
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    position: relative;
+    padding-left: 20px;
+}
+
+.testimonial-card p::before {
+    content: '"';
+    font-size: 4rem;
+    color: rgba(0, 123, 255, 0.1);
+    position: absolute;
+    left: -15px;
+    top: -20px;
+    font-family: Georgia, serif;
+}
+
+/* === STYLES DU CAROUSEL AMÉLIORÉ === */
+/* Carousel principal avec changement automatique et style professionnel */
+#myCarousel {
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.carousel-item {
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Overlay de l'image du carousel avec dégradé */
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Container des informations parfaitement centré */
+.info-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 35px 40px;
+    width: 85%;
+    max-width: 700px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-left: 5px solid #007bff;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s forwards 0.2s;
+    transition: all 0.5s ease;
+}
+
+/* Animation d'entrée pour les infos du carousel */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation pour l'apparition d'éléments */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Titre des blocs d'information */
+.info-container h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: #007bff;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+/* Ligne décorative sous les titres */
+.info-container h3::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background: #007bff;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+}
+
+/* Paragraphes d'information */
+.info-container p {
+    color: #333;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+/* Indicateurs de position dans le carousel */
+.carousel-indicators {
+    bottom: 20px;
+    z-index: 10;
+}
+
+.carousel-indicators li {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    margin: 0 6px;
+    cursor: pointer;
+}
+
+.carousel-indicators li.active {
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Contrôles de navigation du carousel */
+.carousel-control-prev, .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    transition: all 0.1s ease;
+    margin: 0 20px;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    background-color: rgba(0, 123, 255, 0.8);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Responsive - adaptations pour les petits écrans */
+@media (max-width: 768px) {
+    .welcome-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .welcome-text p {
+        font-size: 1.1rem;
+    }
+
+    .carousel-item {
+        height: 450px;
+
+    }
+
+    .info-container {
+        width: 90%;
+        padding: 25px;
+    }
+
+    .info-container h3 {
+        font-size: 1.8rem;
+    }
+
+    .info-container p {
+        font-size: 1rem;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+
+    .testimonial-card {
+        margin: 10px;
+        padding: 20px;
+    }
+}
+
+/* Accessibilité - lecteurs d'écran */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.logo-img {
+width: 40px; /* Ajuste la taille du logo */
+height: 40px;
+border-radius: 50%;
+}
+
+

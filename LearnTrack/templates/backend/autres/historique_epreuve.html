@@ -57,10 +57,9 @@
                     <thead class="table-primary">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col"><i class="fas fa-file-alt me-2"></i>Titre</th>
+                            <th scope="col"><i class="fas fa-book me-2"></i>Matière</th>
                             <th scope="col"><i class="fas fa-graduation-cap me-2"></i>Filière</th>
                             <th scope="col"><i class="fas fa-flask me-2"></i>Spécialité</th>
-                            <th scope="col"><i class="fas fa-book me-2"></i>Matière</th>
                             <th scope="col"><i class="fas fa-folder me-2"></i>Type</th>
                             <th scope="col"><i class="fas fa-calendar-alt me-2"></i>Date</th>
                             <th scope="col"><i class="fas fa-cogs me-2"></i>Actions</th>
@@ -70,10 +69,9 @@
                     <tbody>
                         <tr class="animate-table-row" style="animation-delay: 0.2s;">
                             <td>{{ doc.id }}</td>
-                            <td>{{ doc.title }}</td>
+                            <td>{{ doc.matiere }}</td>
                             <td>{{ doc.filiere }}</td>
                             <td>{{ doc.specialite }}</td>
-                            <td>{{ doc.matiere }}</td>
                             <td>
                                 {% if doc.type_document == "epreuve_corrigee" %}
                                 <span class="badge bg-success">Épreuve corrigée</span>

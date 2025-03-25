@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnTrack - Plateforme de Gestion des Examens BTS</title>
+    <!-- Inclusion de Bootstrap pour la mise en page responsive -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'fontend/css/style.css' %}">
+    <!-- Inclusion de Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inclusion de Google Fonts pour une typographie améliorée -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+</head>
+
+<body>
+    <nav class="fixed w-full top-0 z-50 bg-blue-600 shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo et nom -->
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="{% static 'fontend/images/logo.jpg' %}" alt="Logo" class="h-8 w-8 rounded-full">
+                    <span class="ml-3 text-white font-montserrat font-bold text-xl">LearnTrack</span>
+                </div>
+    
+                <!-- Menu desktop -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <div class="relative">
+                        <input type="text" 
+                               class="w-48 px-4 py-2 rounded-full bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white transition-all" 
+                               placeholder="Rechercher...">
+                        <i class="fas fa-search absolute right-3 top-2.5 text-white/70"></i>
+                    </div>
+                    
+                    <div class="flex space-x-6">
+                        <a href="{% url 'index' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">Accueil</a>
+                        <a href="{% url 'about' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">À propos</a>
+                        <a href="{% url 'inscription' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Inscription</a>
+                        <a href="{% url 'epreuve' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">Espace epreuve</a>
+                        <a href="{% url 'faq' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">FAQ</a>
+                    </div>
+                </div>
+    
+                <!-- Menu mobile -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-white/80">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Menu mobile dépliant -->
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-blue-600 pb-4">
+            <div class="px-4 pt-2">
+                <input type="text" 
+                       class="w-full mb-4 px-4 py-2 rounded-full bg-white/20 text-white placeholder-white/70" 
+                       placeholder="Rechercher...">
+                <div class="flex flex-col space-y-3">
+                    <a href="{% url 'index' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Accueil</a>
+                    <a href="{% url 'about' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">À propos</a>
+                    <a href="{% url 'inscription' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Inscription</a>
+                    <a href="{% url 'comments' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Commentaires</a>
+                    <a href="{% url 'faq' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    
+    {% block content %}
+
+    {% endblock %}
+    
+    
+    
+    
+    
+    
+    
+    <!-- Footer - Pied de page avec liens et informations complémentaires -->
+    <footer>
+        <h2>Explorez LearnTrack</h2>
+        <div class="social-icons">
+            <div class="icon-container">
+                <a href="#" aria-label="Livres" title="Livres"><i class="fas fa-book"></i></a>
+                <span class="description">Livres :<br> Vaste bibliothèque de ressources.</span>
+            </div>
+            <div class="icon-container">
+                <a href="#" aria-label="Tableau" title="Tableau"><i class="fas fa-chalkboard-teacher"></i></a>
+                <span class="description">Tableau : <br> Outils interactifs pour suivre vos progrès.</span>
+            </div>
+            <div class="icon-container">
+                <a href="#" aria-label="Diplôme" title="Diplôme"><i class="fas fa-graduation-cap"></i></a>
+                <span class="description">Diplôme :<br> Préparez-vous à réussir.</span>
+            </div>
+            <div class="icon-container">
+                <a href="#" aria-label="Cerveau" title="Cerveau"><i class="fas fa-brain"></i></a>
+                <span class="description">Cerveau :<br> Développez vos compétences.</span>
+            </div>
+        </div>
+        <div class="footer-links">
+            <h5>Liens rapides</h5>
+            <p>
+                <a href="#">Mentions légales</a> |
+                <a href="#">Politique de confidentialité</a> |
+                <a href="#">Nous contacter</a>
+            </p>
+        </div>
+        <div class="social-media">
+            <h5>Suivez-nous</h5>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Inclusion des scripts JavaScript nécessaires -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.style.maxHeight = menu.classList.contains('hidden') ? '0' : `${menu.scrollHeight}px`;
+        });
+    </script>
+    <script>
+        // Script pour gérer le carousel et autres fonctionnalités interactives
+        $(document).ready(function () {
+            // Configuration du carousel avec défilement automatique
+            $('#myCarousel').carousel({
+                interval: 6000,  // Intervalle entre les slides (6 secondes)
+                pause: "hover",   // Pause au survol
+                wrap: true,       // Navigation circulaire
+                keyboard: true    // Navigation par clavier
+            });
+
+            // Animation lors des transitions du carousel
+            $("#myCarousel").on('slide.bs.carousel', function () {
+                // Préparation des animations pour le prochain slide
+                $('.carousel-item .info-container').css({
+                    'opacity': '0',
+                    'transform': 'translateY(20px)'
+                });
+            });
+
+            $("#myCarousel").on('slid.bs.carousel', function () {
+                // Animation après la transition
+                setTimeout(function () {
+                    $('.carousel-item.active .info-container').css({
+                        'opacity': '1',
+                        'transform': 'translateY(0)',
+                        'animation': 'fadeInUp 0.8s forwards'
+                    });
+                }, 100);
+            });
+
+            // Animation initiale pour le premier slide
+            setTimeout(function () {
+                $('.carousel-item.active .info-container').css({
+                    'opacity': '1',
+                    'transform': 'translateY(0)',
+                    'animation': 'fadeInUp 0.8s forwards'
+                });
+            }, 500);
+
+            // Animation des cartes de témoignage au survol
+            $('.testimonial-card').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-10px) rotate(-3deg)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0) rotate(0)');
+                }
+            );
+
+            // Effet pour la navbar au défilement
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 50) {
+                    $('.navbar').addClass('scrolled');
+                } else {
+                    $('.navbar').removeClass('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

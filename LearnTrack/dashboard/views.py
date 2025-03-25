@@ -114,4 +114,6 @@ def delete_document(request, document_id):
     document.save()
     
     messages.success(request, "Document désactivé avec succès !")
-    return redirect('historique_epreuve')  # Rediriger vers l'historique des épreuves
+    return redirect('historique_epreuve')
+
+

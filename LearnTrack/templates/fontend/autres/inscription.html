@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - LearnTrack</title>
+    <!-- Inclusion de Bootstrap pour la mise en page responsive -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Inclusion de Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Inclusion de Google Fonts pour une typographie améliorée -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            padding: 50px 0;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(0, 123, 255, 0.8));
+            z-index: 1;
+        }
+        
+        .signup-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        .back-btn:hover {
+            color: #ffc107;
+            transform: translateX(-5px);
+            text-decoration: none;
+        }
+        
+        /* Formulaire transparent */
+        .transparent-form {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .transparent-form:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .form-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: #ffc107;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            display: block;
+        }
+        
+        .form-control {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            height: 50px;
+            border-radius: 8px;
+            color: white;
+            padding-left: 45px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+            outline: none;
+            color: white;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 47px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .btn-signup {
+            background: #1244b1;
+            color: white;
+            border: none;
+            height: 50px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-signup:hover {
+            background: #1051ca;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1rem;
+        }
+        
+        .form-footer a {
+            color: #ffc107;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .form-footer a:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 45px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .password-toggle:hover {
+            color: white;
+        }
+        
+        /* Icône de succès pour validation */
+        .form-check-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .signup-container {
+                padding: 15px;
+            }
+            
+            .transparent-form {
+                padding: 25px;
+            }
+            
+            .form-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bouton retour -->
+    <a href="{% url 'index' %}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Retour
+    </a>
+    
+    <div class="signup-container">
+        <div class="transparent-form">
+            <h1 class="form-title">Inscription</h1>
+            
+            <form action="#" method="post" id="signupForm">
+                <div class="form-group">
+                    <label for="signupType">Inscrivez-vous en tant que</label>
+                    <i class="fas fa-user-circle"></i>
+                    <select class="form-control" id="signupType">
+                        <option>Étudiant</option>
+                        <option>Professeur</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupName">Nom complet</label>
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-control" id="signupName" placeholder="Entrez votre nom complet" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">Adresse email</label>
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-control" id="signupEmail" placeholder="Entrez votre email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">Mot de passe</label>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" id="signupPassword" placeholder="Choisissez un mot de passe fort" required>
+                    <span class="password-toggle" id="passwordToggle">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirmez le mot de passe</label>
+                    <i class="fas fa-shield-alt"></i>
+                    <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirmez votre mot de passe" required>
+                </div>
+                
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                    <label class="form-check-label" for="termsCheck">
+                        J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-signup">Créer un compte</button>
+                
+                <div class="form-footer">
+                    <p>Vous avez déjà un compte ? <a href="{% url 'connexion' %}">Se connecter</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Script pour gérer l'affichage du mot de passe
+        $(document).ready(function() {
+            $('#passwordToggle').click(function() {
+                const passwordField = $('#signupPassword');
+                const passwordIcon = $(this).find('i');
+                
+                if (passwordField.attr('type') === 'password') {
+                    passwordField.attr('type', 'text');
+                    passwordIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    passwordField.attr('type', 'password');
+                    passwordIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
+            
+            // Vérification de la correspondance des mots de passe
+            $('#signupConfirmPassword').on('input', function() {
+                const password = $('#signupPassword').val();
+                const confirmPassword = $(this).val();
+                
+                if (password === confirmPassword) {
+                    $(this).css('border', '2px solid rgba(40, 167, 69, 0.5)');
+                } else {
+                    $(this).css('border', '2px solid rgba(220, 53, 69, 0.5)');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
