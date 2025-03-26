@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
     <!-- Inclusion de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Inclusion de Google Fonts pour une typographie améliorée -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -26,7 +28,7 @@
             position: relative;
             padding: 50px 0;
         }
-        
+
         body::before {
             content: '';
             position: absolute;
@@ -37,7 +39,7 @@
             background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(0, 123, 255, 0.8));
             z-index: 1;
         }
-        
+
         .signup-container {
             position: relative;
             z-index: 2;
@@ -45,7 +47,7 @@
             max-width: 500px;
             padding: 30px;
         }
-        
+
         .back-btn {
             position: absolute;
             top: 20px;
@@ -58,17 +60,17 @@
             align-items: center;
             transition: all 0.3s ease;
         }
-        
+
         .back-btn i {
             margin-right: 8px;
         }
-        
+
         .back-btn:hover {
             color: #ffc107;
             transform: translateX(-5px);
             text-decoration: none;
         }
-        
+
         /* Formulaire transparent */
         .transparent-form {
             background: rgba(255, 255, 255, 0.15);
@@ -81,13 +83,13 @@
             color: white;
             transition: all 0.3s ease;
         }
-        
+
         .transparent-form:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
-        
+
         .form-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
@@ -97,7 +99,7 @@
             position: relative;
             padding-bottom: 15px;
         }
-        
+
         .form-title::after {
             content: '';
             position: absolute;
@@ -109,19 +111,19 @@
             transform: translateX(-50%);
             border-radius: 3px;
         }
-        
+
         .form-group {
             margin-bottom: 25px;
             position: relative;
         }
-        
+
         .form-group label {
             font-weight: 500;
             margin-bottom: 8px;
             font-size: 1.1rem;
             display: block;
         }
-        
+
         .form-control {
             background: rgba(255, 255, 255, 0.15);
             border: none;
@@ -132,18 +134,18 @@
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-        
+
         .form-control:focus {
             background: rgba(255, 255, 255, 0.25);
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
             outline: none;
             color: white;
         }
-        
+
         .form-control::placeholder {
             color: rgba(255, 255, 255, 0.6);
         }
-        
+
         .form-group i {
             position: absolute;
             left: 15px;
@@ -151,7 +153,7 @@
             color: rgba(255, 255, 255, 0.8);
             font-size: 1.1rem;
         }
-        
+
         .btn-signup {
             background: #1244b1;
             color: white;
@@ -166,30 +168,30 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        
+
         .btn-signup:hover {
             background: #1051ca;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
-        
+
         .form-footer {
             text-align: center;
             margin-top: 25px;
             font-size: 1rem;
         }
-        
+
         .form-footer a {
             color: #ffc107;
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .form-footer a:hover {
             color: white;
             text-decoration: none;
         }
-        
+
         .password-toggle {
             position: absolute;
             right: 15px;
@@ -199,107 +201,163 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .password-toggle:hover {
             color: white;
         }
-        
+
         /* Icône de succès pour validation */
         .form-check-label {
             color: rgba(255, 255, 255, 0.9);
             font-weight: 400;
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 576px) {
             .signup-container {
                 padding: 15px;
             }
-            
+
             .transparent-form {
                 padding: 25px;
             }
-            
+
             .form-title {
                 font-size: 1.8rem;
             }
         }
+
+        /* Style pour les messages */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .toast {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+        }
+
+        .toast-header {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .toast-body {
+            font-size: 14px;
+        }
+
+        .animate__animated {
+            animation-duration: 0.5s;
+        }
     </style>
 </head>
+
 <body>
     <!-- Bouton retour -->
     <a href="{% url 'index' %}" class="back-btn">
         <i class="fas fa-arrow-left"></i> Retour
     </a>
-    
+
     <div class="signup-container">
         <div class="transparent-form">
             <h1 class="form-title">Inscription</h1>
-            
-            <form action="#" method="post" id="signupForm">
-                <div class="form-group">
-                    <label for="signupType">Inscrivez-vous en tant que</label>
-                    <i class="fas fa-user-circle"></i>
-                    <select class="form-control" id="signupType">
-                        <option>Étudiant</option>
-                        <option>Professeur</option>
-                    </select>
-                </div>
-                
+
+            <form action="{% url 'inscription' %}" method="post" id="signupForm">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="signupName">Nom complet</label>
                     <i class="fas fa-user"></i>
-                    <input type="text" class="form-control" id="signupName" placeholder="Entrez votre nom complet" required>
+                    <input type="text" name="name" class="form-control" id="signupName"
+                        placeholder="Entrez votre nom complet" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="signupEmail">Adresse email</label>
                     <i class="fas fa-envelope"></i>
-                    <input type="email" class="form-control" id="signupEmail" placeholder="Entrez votre email" required>
+                    <input type="text" name="email" class="form-control" id="signupEmail"
+                        placeholder="Entrez votre email" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="signupPassword">Mot de passe</label>
                     <i class="fas fa-lock"></i>
-                    <input type="password" class="form-control" id="signupPassword" placeholder="Choisissez un mot de passe fort" required>
+                    <input type="password" name="password" class="form-control" id="signupPassword"
+                        placeholder="Choisissez un mot de passe fort" required>
                     <span class="password-toggle" id="passwordToggle">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="signupConfirmPassword">Confirmez le mot de passe</label>
                     <i class="fas fa-shield-alt"></i>
-                    <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirmez votre mot de passe" required>
+                    <input type="password" name="repassword" class="form-control" id="signupConfirmPassword"
+                        placeholder="Confirmez votre mot de passe" required>
                 </div>
-                
+
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="termsCheck" required>
                     <label class="form-check-label" for="termsCheck">
-                        J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a>
+                        J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de
+                            confidentialité</a>
                     </label>
                 </div>
-                
+
                 <button type="submit" class="btn btn-signup">Créer un compte</button>
-                
+
                 <div class="form-footer">
                     <p>Vous avez déjà un compte ? <a href="{% url 'connexion' %}">Se connecter</a></p>
                 </div>
             </form>
         </div>
     </div>
-    
+
+    <!-- Affichage des messages sous forme de toast -->
+    {% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+        <div class="toast show animate__animated animate__fadeInRight" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-autohide="false">
+            <div class="toast-header">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+            </div>
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Activation automatique des toasts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toastElements = document.querySelectorAll('.toast');
+            toastElements.forEach(function (toastElement) {
+                new bootstrap.Toast(toastElement).show();
+            });
+        });
+    </script>
+
+
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         // Script pour gérer l'affichage du mot de passe
-        $(document).ready(function() {
-            $('#passwordToggle').click(function() {
+        $(document).ready(function () {
+            $('#passwordToggle').click(function () {
                 const passwordField = $('#signupPassword');
                 const passwordIcon = $(this).find('i');
-                
+
                 if (passwordField.attr('type') === 'password') {
                     passwordField.attr('type', 'text');
                     passwordIcon.removeClass('fa-eye').addClass('fa-eye-slash');
@@ -308,12 +366,12 @@
                     passwordIcon.removeClass('fa-eye-slash').addClass('fa-eye');
                 }
             });
-            
+
             // Vérification de la correspondance des mots de passe
-            $('#signupConfirmPassword').on('input', function() {
+            $('#signupConfirmPassword').on('input', function () {
                 const password = $('#signupPassword').val();
                 const confirmPassword = $(this).val();
-                
+
                 if (password === confirmPassword) {
                     $(this).css('border', '2px solid rgba(40, 167, 69, 0.5)');
                 } else {
@@ -323,4 +381,5 @@
         });
     </script>
 </body>
+
 </html>

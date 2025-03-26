@@ -66,7 +66,7 @@
                 </a>
 
                 <!-- Accueil -->
-                <a class="nav-link animate__animated animate__fadeInLeft" href="#">
+                <a class="nav-link animate__animated animate__fadeInLeft" href="{% url 'index' %}">
                     <i class="fas fa-home me-2 text-primary"></i>Accueil
                 </a>
 
@@ -84,19 +84,6 @@
                     </a>
                 </div>
 
-                <!-- Gestion des cours -->
-                <a class="nav-link animate__animated animate__fadeInLeft delay-2" href="#" data-bs-toggle="collapse"
-                    data-bs-target="#courseManagement" aria-expanded="false" aria-controls="courseManagement">
-                    <i class="fas fa-chalkboard-teacher me-2 text-primary"></i>Gestion des cours
-                </a>
-                <div class="collapse" id="courseManagement">
-                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="#">
-                        <i class="fas fa-plus-circle me-2 text-primary"></i>Ajouter un cours
-                    </a>
-                    <a class="nav-link animate__animated animate__fadeInLeft ms-4" href="#">
-                        <i class="fas fa-list me-2 text-primary"></i>Voir les cours
-                    </a>
-                </div>
 
                 <!-- Gestion des épreuves -->
                 <a class="nav-link animate__animated animate__fadeInLeft delay-2" href="#" data-bs-toggle="collapse"

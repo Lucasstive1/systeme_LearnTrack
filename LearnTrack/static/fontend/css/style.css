@@ -314,7 +314,7 @@
 
 /* === STYLES DE L'IMAGE DE FOND ET DU TEXTE D'ACCUEIL === */
 .background-image {
-    background-image: url('screnim.jpg'); /* Image de fond */
+    background-image: url('{% static "fontend/images/screnim.jpg" %}'); /* Image de fond */
     background-size: cover;
     background-position: center;
     height: 500px; /* Hauteur augmentée pour plus d'impact */

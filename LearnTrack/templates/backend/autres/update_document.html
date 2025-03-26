@@ -54,8 +54,35 @@
                                         <option value="epreuve_non_corrigee" {% if document.type_document == 'epreuve_non_corrigee'%}selected{% endif %}>
                                             Épreuve non corrigée
                                         </option>
+                                        <option value="cours" {% if document.type_document == 'cours'%}selected{% endif %}>
+                                            Cours
+                                        </option>
                                     </select>
                                     <label for="type"><i class="fas fa-tag me-2 text-muted"></i>Type</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <select class="form-select" id="niveau" name="niveau">
+                                        <option value="bts_dut" {% if document.niveau == 'bts_dut' %}selected{% endif %}>
+                                            BTS/DUT
+                                        </option>
+                                        <option value="licence" {% if document.niveau == 'licence'%}selected{% endif %}>
+                                            Licence
+                                        </option>
+                                        <option value="master_1" {% if document.niveau == 'master_1'%}selected{% endif %}>
+                                            Master 1
+                                        </option>
+                                        <option value="master_2" {% if document.niveau == 'master_2'%}selected{% endif %}>
+                                            Master 2
+                                        </option>
+                                        <option value="doctorat" {% if document.niveau == 'doctorat'%}selected{% endif %}>
+                                            Doctorat
+                                        </option>
+                                    </select>
+                                    <label for="niveau"><i class="fas fa-tag me-2 text-muted"></i>Niveau</label>
                                 </div>
                             </div>
                         </div>

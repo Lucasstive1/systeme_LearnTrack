@@ -18,6 +18,7 @@ def add_course(request):
         filiere = request.POST.get('filiere')
         specialite = request.POST.get('specialite')
         type_document = request.POST.get('type')
+        niveau = request.POST.get('niveau')
         file = request.FILES.get('file')
         
         
@@ -48,6 +49,7 @@ def add_course(request):
             filiere=filiere,
             specialite=specialite,
             type_document=type_document,
+            niveau=niveau,
             file=file,
             file_hash=file_hash
         )
@@ -78,6 +80,7 @@ def update_document(request, document_id):
         document.filiere = request.POST.get('filiere')
         document.specialite = request.POST.get('specialite')
         document.type_document = request.POST.get('type')
+        document.niveau = request.POST.get('niveau')
 
         # Vérification si un fichier a été téléchargé
         file = request.FILES.get('file')

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
     <!-- Inclusion de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Inclusion de Google Fonts pour une typographie améliorée -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -25,7 +27,7 @@
             color: white;
             position: relative;
         }
-        
+
         body::before {
             content: '';
             position: absolute;
@@ -36,7 +38,7 @@
             background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(5, 16, 112, 0.233));
             z-index: 1;
         }
-        
+
         .login-container {
             position: relative;
             z-index: 2;
@@ -44,7 +46,7 @@
             max-width: 450px;
             padding: 30px;
         }
-        
+
         .back-btn {
             position: absolute;
             top: 20px;
@@ -57,17 +59,17 @@
             align-items: center;
             transition: all 0.3s ease;
         }
-        
+
         .back-btn i {
             margin-right: 8px;
         }
-        
+
         .back-btn:hover {
             color: #ffc107;
             transform: translateX(-5px);
             text-decoration: none;
         }
-        
+
         /* Formulaire transparent */
         .transparent-form {
             background: rgba(255, 255, 255, 0.15);
@@ -80,13 +82,13 @@
             color: white;
             transition: all 0.3s ease;
         }
-        
+
         .transparent-form:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
-        
+
         .form-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
@@ -96,7 +98,7 @@
             position: relative;
             padding-bottom: 15px;
         }
-        
+
         .form-title::after {
             content: '';
             position: absolute;
@@ -108,19 +110,19 @@
             transform: translateX(-50%);
             border-radius: 3px;
         }
-        
+
         .form-group {
             margin-bottom: 25px;
             position: relative;
         }
-        
+
         .form-group label {
             font-weight: 500;
             margin-bottom: 8px;
             font-size: 1.1rem;
             display: block;
         }
-        
+
         .form-control {
             background: rgba(255, 255, 255, 0.15);
             border: none;
@@ -131,18 +133,18 @@
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-        
+
         .form-control:focus {
             background: rgba(255, 255, 255, 0.25);
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
             outline: none;
             color: white;
         }
-        
+
         .form-control::placeholder {
             color: rgba(255, 255, 255, 0.6);
         }
-        
+
         .form-group i {
             position: absolute;
             left: 15px;
@@ -150,7 +152,7 @@
             color: rgba(255, 255, 255, 0.8);
             font-size: 1.1rem;
         }
-        
+
         .btn-login {
             background: #007bff;
             color: white;
@@ -165,30 +167,30 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        
+
         .btn-login:hover {
             background: #0069d9;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
-        
+
         .form-footer {
             text-align: center;
             margin-top: 25px;
             font-size: 1rem;
         }
-        
+
         .form-footer a {
             color: #ffc107;
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .form-footer a:hover {
             color: white;
             text-decoration: none;
         }
-        
+
         .password-toggle {
             position: absolute;
             right: 15px;
@@ -198,64 +200,87 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .password-toggle:hover {
             color: white;
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 576px) {
             .login-container {
                 padding: 15px;
             }
-            
+
             .transparent-form {
                 padding: 25px;
             }
-            
+
             .form-title {
                 font-size: 1.8rem;
             }
         }
+
+        /* Style pour les messages */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .toast {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+        }
+
+        .toast-header {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .toast-body {
+            font-size: 14px;
+        }
+
+        .animate__animated {
+            animation-duration: 0.5s;
+        }
     </style>
 </head>
+
 <body>
     <!-- Bouton retour -->
     <a href="{% url 'index' %}" class="back-btn">
         <i class="fas fa-arrow-left"></i> Retour
     </a>
-    
+
     <div class="login-container">
         <div class="transparent-form">
             <h1 class="form-title">Connexion</h1>
-            
-            <form action="#" method="post" id="loginForm">
-                <div class="form-group">
-                    <label for="loginType">Connectez-vous en tant que</label>
-                    <i class="fas fa-user-circle"></i>
-                    <select class="form-control" id="loginType">
-                        <option>Étudiant</option>
-                        <option>Professeur</option>
-                    </select>
-                </div>
-                
+
+            <form action="{% url 'connexion' %}" method="post" id="loginForm">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="loginEmail">Adresse email</label>
                     <i class="fas fa-envelope"></i>
-                    <input type="email" class="form-control" id="loginEmail" placeholder="Entrez votre email" required>
+                    <input type="email" name="email" class="form-control" id="loginEmail"
+                        placeholder="Entrez votre email" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="loginPassword">Mot de passe</label>
                     <i class="fas fa-lock"></i>
-                    <input type="password" class="form-control" id="loginPassword" placeholder="Entrez votre mot de passe" required>
+                    <input type="password" name="password" class="form-control" id="loginPassword"
+                        placeholder="Entrez votre mot de passe" required>
                     <span class="password-toggle" id="passwordToggle">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
-                
+
                 <button type="submit" class="btn btn-login">Se connecter</button>
-                
+
                 <div class="form-footer">
                     <p>Vous n'avez pas de compte ? <a href="{% url 'inscription' %}">S'inscrire</a></p>
                     <p><a href="#">Mot de passe oublié ?</a></p>
@@ -263,18 +288,47 @@
             </form>
         </div>
     </div>
-    
+
+    <!-- Affichage des messages sous forme de toast -->
+    {% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+        <div class="toast show animate__animated animate__fadeInRight" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-autohide="false">
+            <div class="toast-header">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+            </div>
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Activation automatique des toasts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toastElements = document.querySelectorAll('.toast');
+            toastElements.forEach(function (toastElement) {
+                new bootstrap.Toast(toastElement).show();
+            });
+        });
+    </script>
+
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         // Script pour gérer l'affichage du mot de passe
-        $(document).ready(function() {
-            $('#passwordToggle').click(function() {
+        $(document).ready(function () {
+            $('#passwordToggle').click(function () {
                 const passwordField = $('#loginPassword');
                 const passwordIcon = $(this).find('i');
-                
+
                 if (passwordField.attr('type') === 'password') {
                     passwordField.attr('type', 'text');
                     passwordIcon.removeClass('fa-eye').addClass('fa-eye-slash');
@@ -286,4 +340,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -61,6 +61,7 @@
                             <th scope="col"><i class="fas fa-graduation-cap me-2"></i>Filière</th>
                             <th scope="col"><i class="fas fa-flask me-2"></i>Spécialité</th>
                             <th scope="col"><i class="fas fa-folder me-2"></i>Type</th>
+                            <th scope="col"><i class="fas fa-folder me-2"></i>Niveau</th>
                             <th scope="col"><i class="fas fa-calendar-alt me-2"></i>Date</th>
                             <th scope="col"><i class="fas fa-cogs me-2"></i>Actions</th>
                         </tr>
@@ -75,10 +76,13 @@
                             <td>
                                 {% if doc.type_document == "epreuve_corrigee" %}
                                 <span class="badge bg-success">Épreuve corrigée</span>
-                                {% else %}
+                                {% elif doc.type_document == "epreuve_non_corrigee" %}
                                 <span class="badge bg-danger">Épreuve non corrigée</span>
+                                {% else %}
+                                <span class="badge bg-primary">Cours</span>
                                 {% endif %}
                             </td>
+                            <td>{{ doc.niveau }}</td>
                             <td>{{ doc.date|date:"d M Y" }}</td>
                             <td class="d-inline-flex">
                                 <a href="{% url 'update_document' doc.id %}" class="btn btn-sm btn-primary"><i
