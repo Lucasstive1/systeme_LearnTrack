@@ -300,63 +300,7 @@
 
 <div
     class="font-roboto min-h-screen flex flex-col bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
-    <!-- Navigation - Barre de navigation principale avec espacement structuré -->
-    <nav class="fixed w-full top-0 z-50 bg-blue-600 shadow-lg transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <!-- Logo et nom -->
-                <div class="flex-shrink-0 flex items-center">
-                    <img src="{% static 'fontend/images/logo.jpg' %}" alt="Logo" class="h-8 w-8 rounded-full">
-                    <span class="ml-3 text-white font-montserrat font-bold text-xl">LearnTrack</span>
-                </div>
 
-                <!-- Menu desktop -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <div class="relative">
-                        <input type="text"
-                            class="w-48 px-4 py-2 rounded-full bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white transition-all"
-                            placeholder="Rechercher...">
-                        <i class="fas fa-search absolute right-3 top-2.5 text-white/70"></i>
-                    </div>
-
-                    <div class="flex space-x-6">
-                        <a href="{% url 'index' %}"
-                            class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">Accueil</a>
-                        <a href="{% url 'about' %}"
-                            class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">À propos</a>
-                        <a href="{% url 'comments' %}"
-                            class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">Commentaires</a>
-                        <a href="{% url 'faq' %}"
-                            class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">FAQ</a>
-                    </div>
-                </div>
-
-                <!-- Menu mobile -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white hover:text-white/80">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menu mobile dépliant -->
-        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-blue-600 pb-4">
-            <div class="px-4 pt-2">
-                <input type="text"
-                    class="w-full mb-4 px-4 py-2 rounded-full bg-white/20 text-white placeholder-white/70"
-                    placeholder="Rechercher...">
-                <div class="flex flex-col space-y-3">
-                    <a href="{% url 'index' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Accueil</a>
-                    <a href="{% url 'about' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">À propos</a>
-                    <a href="{% url 'comments' %}"
-                        class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Commentaires</a>
-                    <a href="{% url 'faq' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">FAQ</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Section Hero -->
     <section
         class="relative overflow-hidden bg-gradient-to-br from-primary to-blue-700 dark:from-blue-900 dark:to-gray-800 text-white py-16">
         <div class="absolute right-0 bottom-0 opacity-10">

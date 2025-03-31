@@ -1,0 +1,299 @@
+
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"/>
+
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --success-color: #4cc9f0;
+        --danger-color: #f72585;
+        --light-bg: #f8f9fa;
+    }
+    
+    .user-card {
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .user-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(67, 97, 238, 0.15);
+    }
+    
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+    
+    .badge-role {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+    
+    .admin-badge {
+        background-color: #f72585;
+        color: white;
+    }
+    
+    .teacher-badge {
+        background-color: #4895ef;
+        color: white;
+    }
+    
+    .user-badge {
+        background-color: #4cc9f0;
+        color: white;
+    }
+    
+    .action-btn {
+        width: 35px;
+        height: 35px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+    
+    .action-btn:hover {
+        transform: scale(1.1);
+    }
+    
+    .btn-add-user {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-add-user:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+</style>
+<div class="main-content"></div>
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0 animate__animated animate__fadeInDown">Gestion des Utilisateurs</h2>
+                <a href="{% url 'enregistrer_utilisateur' %}" class="btn btn-primary btn-add-user animate__animated animate__fadeIn">
+                    <i class="fas fa-user-plus me-2"></i>Ajouter un utilisateur
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row animate__animated animate__fadeIn">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-0 pb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Liste des Utilisateurs</h4>
+                        <div class="input-group" style="max-width: 300px;">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher...">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table id="usersTable" class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Utilisateur</th>
+                                    <th>Email</th>
+                                    <th>Téléphone</th>
+                                    <th>Rôle</th>
+                                    <th>Date d'inscription</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr class="animate-fade-in delay-{{ forloop.counter0|divisibleby:3|add:1 }}">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar me-3">
+                                                {% if user.profile_picture %}
+                                                    <img src="{{ user.profile_picture.url }}" alt="Avatar" class="rounded-circle">
+                                                {% else %}
+                                                    {{ user.username|first|upper }}
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">{{ user.username }}</h6>
+                                                <small class="text-muted">ID: {{ user.id }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.phone_number|default:"-" }}</td>
+                                    <td>
+                                        {% with user.groups.first.name as role %}
+                                        <span class="badge 
+                                            {% if role == 'admin' %}admin-badge
+                                            {% elif role == 'professeur' %}teacher-badge
+                                            {% else %}user-badge
+                                            {% endif %}">
+                                            {{ role|default:"Utilisateur" }}
+                                        </span>
+                                        {% endwith %}
+                                    </td>
+                                    <td>{{ user.date_joined|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <a href="#" class="action-btn btn btn-sm btn-outline-primary" title="Modifier">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="action-btn btn btn-sm btn-outline-danger" 
+                                               title="Supprimer"
+                                               data-bs-toggle="modal" 
+                                               data-bs-target="#deleteModal{{ user.id }}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <i class="fas fa-user-slash text-muted mb-3" style="font-size: 3rem;"></i>
+                                            <h5 class="text-muted">Aucun utilisateur trouvé</h5>
+                                            <a href="{% url 'enregistrer_utilisateur' %}" class="btn btn-primary mt-3">
+                                                <i class="fas fa-user-plus me-2"></i>Ajouter un utilisateur
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-muted">
+                            Affichage de <span id="startItem">1</span> à <span id="endItem">{{ users.count }}</span> sur <span id="totalItems">{{ users.count }}</span> utilisateurs
+                        </div>
+                        <nav>
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Précédent</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Suivant</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal{{ user.id }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmer la suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ user.username }}</strong> ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialisation de DataTable
+        $('#usersTable').DataTable({
+            responsive: true,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
+            },
+            initComplete: function() {
+                $('.dataTables_filter input').addClass('form-control');
+                $('.dataTables_length select').addClass('form-select');
+            }
+        });
+        
+        // Animation au survol des lignes
+        $('#usersTable tbody tr').hover(
+            function() {
+                $(this).addClass('bg-light');
+            },
+            function() {
+                $(this).removeClass('bg-light');
+            }
+        );
+        
+        // Mise à jour des compteurs
+        function updateCounters() {
+            const table = $('#usersTable').DataTable();
+            const info = table.page.info();
+            
+            $('#startItem').text(info.start + 1);
+            $('#endItem').text(info.end);
+            $('#totalItems').text(info.recordsTotal);
+        }
+        
+        // Écouteur d'événements pour la pagination
+        $('#usersTable').on('page.dt', updateCounters);
+        $('#usersTable').on('search.dt', updateCounters);
+        
+        // Initialisation des compteurs
+        updateCounters();
+    });
+</script>
+
+{% endblock %}

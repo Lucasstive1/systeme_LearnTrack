@@ -6,6 +6,8 @@ from django.core.validators import validate_email
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from dashboard.models import Document
+from LearTrack_app.models import CustomUser
+from django.contrib.auth.models import Group
 
 # Page d'accueil
 def index(request):
@@ -64,7 +66,7 @@ def connexion(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        user = User.objects.filter(email=email).first()
+        user = CustomUser.objects.filter(email=email).first()
 
         if user:
             auth_user = authenticate(username=user.username, password=password)
@@ -84,3 +86,45 @@ def connexion(request):
 def epreuve(request):
     documents = Document.objects.all()
     return render(request, 'fontend/autres/epreuve.html', {'documents': documents})
+
+
+
+def enregistrer_utilisateur(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        role = request.POST.get('role')
+        password = request.POST.get('password')
+        
+        # validation de l'email
+        try:
+            validate_email(email)
+        except:
+            messages.error(request, "Veuillez entrer une adresse email valide.")
+            return redirect('enregistrer_utilisateur')
+        
+         # Vérification de l'existence de l'utilisateur
+        if CustomUser.objects.filter(Q(email=email) | Q(username=username)).exists():
+            messages.error(request, "Un utilisateur avec cet email ou ce nom existe déjà.")
+            return redirect('enregistrer_utilisateur')
+        
+        # Création de l'utilisateur
+        user = CustomUser.objects.create_user(username=username, email=email, password=password, phone_number=phone_number)
+        
+         # Attribution du groupe selon le rôle sélectionné
+        if role:
+            group, created = Group.objects.get_or_create(name=role)
+            user.groups.add(group)
+        
+        messages.success(request, "Utilisateur ajouté avec succès !")
+        return redirect('enregistrer_utilisateur')
+        
+        
+    
+    return render(request, 'backend/autres/add_users.html')
+
+
+def historique_user(request):
+    users = CustomUser.objects.all()
+    return render(request, 'backend/autres/historique_user.html', {'users': users})

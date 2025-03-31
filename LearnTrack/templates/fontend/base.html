@@ -60,13 +60,13 @@
                 <input type="text" 
                        class="w-full mb-4 px-4 py-2 rounded-full bg-white/20 text-white placeholder-white/70" 
                        placeholder="Rechercher...">
-                <div class="flex flex-col space-y-3">
-                    <a href="{% url 'index' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Accueil</a>
-                    <a href="{% url 'about' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">À propos</a>
-                    <a href="{% url 'inscription' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Inscription</a>
-                    <a href="{% url 'comments' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Commentaires</a>
-                    <a href="{% url 'faq' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">FAQ</a>
-                </div>
+                       <div class="flex space-x-6">
+                        <a href="{% url 'index' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">Accueil</a>
+                        <a href="{% url 'about' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">À propos</a>
+                        <a href="{% url 'inscription' %}" class="text-white px-3 py-2 hover:bg-white/10 rounded-lg">Inscription</a>
+                        <a href="{% url 'epreuve' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">Espace epreuve</a>
+                        <a href="{% url 'faq' %}" class="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all">FAQ</a>
+                    </div>
             </div>
         </div>
     </nav>

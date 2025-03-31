@@ -1,0 +1,249 @@
+{% extends 'backend/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    {% for message in messages %}
+    <div class="toast show animate__animated animate__fadeInRight" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+        <div class="toast-header">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<main class="main-content">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card border-0 shadow-lg animate__animated animate__fadeIn">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h2 class="h4 mb-0 text-center">
+                            <i class="fas fa-user-plus me-2"></i>Enregistrer un utilisateur
+                        </h2>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <form method="POST" class="needs-validation" novalidate>
+                            {% csrf_token %}
+
+                            <div class="mb-4 form-floating">
+                                <input type="text" name="username" class="form-control" id="username" required
+                                    placeholder="Nom d'utilisateur" aria-describedby="usernameHelp">
+                                <label for="username">Nom d'utilisateur</label>
+                                <div id="usernameHelp" class="form-text text-muted small">
+                                    Votre nom d'utilisateur doit être unique (4-20 caractères)
+                                </div>
+                                <div class="invalid-feedback">
+                                    Veuillez fournir un nom d'utilisateur valide.
+                                </div>
+                            </div>
+
+                            <div class="mb-4 form-floating">
+                                <input type="email" name="email" class="form-control" id="email" required
+                                    placeholder="Email">
+                                <label for="email">Adresse email</label>
+                                <div class="invalid-feedback">
+                                    Veuillez fournir une adresse email valide.
+                                </div>
+                            </div>
+
+                            <div class="mb-4 form-floating">
+                                <input type="tel" name="phone_number" class="form-control" id="phone_number"
+                                    placeholder="Numéro de téléphone">
+                                <label for="phone_number">Numéro de téléphone (optionnel)</label>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="role" class="form-label fw-bold">Rôle</label>
+                                <select name="role" class="form-select" id="role" required>
+                                    <option value="" disabled selected>Sélectionnez un rôle</option>
+                                    <option value="admin">Administrateur</option>
+                                    <option value="professeur">Professeur</option>
+                                    <option value="utilisateur">Utilisateur</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4 form-floating">
+                                <input type="password" name="password" class="form-control" id="password" required
+                                    placeholder="Mot de passe">
+                                <label for="password">Mot de passe</label>
+                                <div class="invalid-feedback">
+                                    Le mot de passe doit contenir au moins 8 caractères.
+                                </div>
+                                <div class="password-strength mt-2">
+                                    <div class="progress" style="height: 4px;">
+                                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <small class="text-muted">Force du mot de passe</small>
+                                </div>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg py-3 shadow-sm hover-effect">
+                                    <i class="fas fa-user-plus me-2"></i> Ajouter l'utilisateur
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Affichage des messages sous forme de toast -->
+
+<style>
+    /* Animation et styles personnalisés */
+    .hover-effect {
+        transition: all 0.3s ease;
+        transform: translateY(0);
+    }
+
+    .hover-effect:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .form-control,
+    .form-select {
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .animate__animated {
+        animation-duration: 0.5s;
+    }
+
+    /* Style pour la force du mot de passe */
+    .progress-bar {
+        transition: width 0.5s ease;
+    }
+
+    /* Style pour les messages */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
+
+    .toast {
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+    }
+
+    .toast-header {
+        background-color: #3498db;
+        color: white;
+        font-weight: 600;
+    }
+
+    .toast-body {
+        font-size: 14px;
+    }
+
+    .animate__animated {
+        animation-duration: 0.5s;
+    }
+</style>
+
+<script>
+    // Animation pour la force du mot de passe
+    document.getElementById('password').addEventListener('input', function () {
+        const password = this.value;
+        const progressBar = document.querySelector('.progress-bar');
+        let strength = 0;
+
+        if (password.length > 0) strength += 20;
+        if (password.length >= 8) strength += 30;
+        if (/[A-Z]/.test(password)) strength += 20;
+        if (/[0-9]/.test(password)) strength += 20;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 10;
+
+        progressBar.style.width = strength + '%';
+
+        // Changer la couleur en fonction de la force
+        if (strength < 40) {
+            progressBar.className = 'progress-bar bg-danger';
+        } else if (strength < 70) {
+            progressBar.className = 'progress-bar bg-warning';
+        } else {
+            progressBar.className = 'progress-bar bg-success';
+        }
+    });
+
+    // Validation du formulaire
+    (function () {
+        'use strict';
+
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+
+    // Drag & drop
+    const uploadArea = document.querySelector('.upload-area');
+
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderStyle = 'solid';
+        uploadArea.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderStyle = 'dashed';
+        uploadArea.style.backgroundColor = '';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileInput.files = e.dataTransfer.files;
+        uploadArea.style.borderStyle = 'dashed';
+        uploadArea.style.backgroundColor = '';
+        fileName.textContent = 'Fichier sélectionné: ' + e.dataTransfer.files[0].name;
+    });
+
+    // Affichage des toasts après ajout des messages
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastElements = document.querySelectorAll('.toast');
+        toastElements.forEach(function (toastElement) {
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        });
+    });
+</script>
+
+
+{% endblock %}

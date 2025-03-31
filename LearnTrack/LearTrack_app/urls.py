@@ -9,5 +9,7 @@ urlpatterns = [
     path('inscription/', views.inscription, name="inscription"),
     path('connexion/', views.connexion, name="connexion"),
     path('epreuve/', views.epreuve, name="epreuve"),
+    path('enregistrer_utilisateur/', views.enregistrer_utilisateur, name="enregistrer_utilisateur"),
+    path('historique_user/', views.historique_user, name="historique_user"),
     
 ]

@@ -1,145 +1,257 @@
 {% extends 'fontend/base.html' %}
 {% load static %}
 
-
 {% block content %}
 
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <style>
+    /* Thème et couleurs */
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --light-bg: #f8f9fa;
+        --dark-text: #212529;
+    }
+    
+    /* Style des cartes */
     .document-card {
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         border: none;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-radius: 15px;
+        background: white;
+        border-radius: 12px;
         overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        height: 100%;
     }
 
     .document-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(67, 97, 238, 0.15);
     }
 
     .badge-document {
-        font-size: 0.8rem;
-        padding: 8px 12px;
+        font-size: 0.75rem;
+        padding: 6px 12px;
         border-radius: 20px;
+        letter-spacing: 0.5px;
     }
 
     .document-thumbnail {
-        height: 200px;
-        background: rgba(0, 0, 0, 0.05);
+        height: 180px;
+        background: linear-gradient(135deg, #f6f7f9 0%, #e9ecef 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 4rem;
-        color: #6c757d;
+        color: var(--primary-color);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .document-thumbnail i {
+        font-size: 3.5rem;
+        z-index: 1;
+    }
+    
+    .document-thumbnail::after {
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(67,97,238,0.1) 0%, rgba(67,97,238,0) 70%);
+        transform: translate(-25%, -25%);
     }
 
-    .filter-btn.active {
-        transform: scale(1.1);
+    /* Filtres améliorés */
+    .filter-section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+    }
+    
+    .filter-select {
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+        background-position: right 1rem center;
+    }
+    
+    .filter-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+    }
+    
+    .filter-label {
         font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--dark-text);
+        font-size: 0.9rem;
     }
 
-    .animated-loading {
-        animation: pulse 2s infinite;
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .fade-in-up {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    
+    /* Bouton de téléchargement */
+    .download-btn {
+        background: var(--primary-color);
+        border: none;
+        padding: 0.5rem 1.25rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .download-btn:hover {
+        background: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+    
+    .download-btn i {
+        margin-right: 8px;
     }
 
-    @keyframes pulse {
-        0% {
-            opacity: 1;
-        }
-
-        50% {
-            opacity: 0.5;
-        }
-
-        100% {
-            opacity: 1;
-        }
+    /* État vide */
+    .empty-state {
+        padding: 4rem 0;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+    }
+    
+    .empty-state.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .empty-state i {
+        font-size: 4rem;
+        color: #adb5bd;
+        margin-bottom: 1.5rem;
     }
 </style>
 
-
 <!-- Main Content -->
-<div class="container py-5">
+<div class="container py-5" >
 
     <!-- Header Section -->
-    <div class="text-center mb-5" data-aos="fade-up">
-        <h1 class="display-4 fw-bold mb-3">📚 Archives des Épreuves</h1>
+    <div class="text-center mb-5" data-aos="fade-down" data-aos-delay="100" style="margin-top: 50px;">
+        <h1 class="display-1 fw-bold mb-3 text-gradient-primary">📚 Archives des Épreuves</h1>
         <p class="lead text-muted">Trouvez toutes les épreuves et corrigés de votre filière</p>
     </div>
 
-    <!-- Filters -->
-    <div class="row mb-5 g-3" data-aos="fade-up">
-        <div class="col-md-4">
-            <select class="form-select shadow-sm" id="filterType">
-                <option value="">Tous les types</option>
-                <option value="epreuve_corrigee">Épreuves Corrigées</option>
-                <option value="epreuve_non_corrigee">Épreuves Non Corrigées</option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <select class="form-select shadow-sm" id="filterSubject">
-                <option value="">Toutes les matières</option>
-                <option>Mathématiques</option>
-                <option>Physique-Chimie</option>
-                <!-- Ajouter d'autres options dynamiquement -->
-            </select>
-        </div>
-        <div class="col-md-4">
-            <select class="form-select shadow-sm" id="filterField">
-                <option value="">Toutes les filières</option>
-                <option>Informatique</option>
-                <option>Gestion</option>
-                <!-- Ajouter d'autres options dynamiquement -->
-            </select>
+    <!-- Filters Section -->
+    <div class="filter-section animate__animated animate__fadeIn" data-aos="fade-up" data-aos-delay="200">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <label for="filterType" class="filter-label">Type de document</label>
+                <select class="form-select filter-select" id="filterType">
+                    <option value="">Tous les types</option>
+                    <option value="epreuve_corrigee">Épreuves Corrigées</option>
+                    <option value="epreuve_non_corrigee">Épreuves Non Corrigées</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="filterSubject" class="filter-label">Matière</label>
+                <select class="form-select filter-select" id="filterSubject">
+                    <option value="">Toutes les matières</option>
+                    <option>Mathématiques</option>
+                    <option>Physique-Chimie</option>
+                    <option>Sciences de l'ingénieur</option>
+                    <option>Informatique</option>
+                    <option>Économie</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="filterField" class="filter-label">Filière</label>
+                <select class="form-select filter-select" id="filterField">
+                    <option value="">Toutes les filières</option>
+                    <option>Informatique</option>
+                    <option>Gestion</option>
+                    <option>Ingénierie</option>
+                    <option>Médecine</option>
+                    <option>Droit</option>
+                </select>
+            </div>
         </div>
     </div>
 
     <!-- Documents Grid -->
-    
-    <div class="row">
+    <div id="documentsGrid" class="row">
         {% for document in documents %}
-        <div class="col-lg-4 col-md-6 my-3" data-aos="fade-up">
-            <div class="document-card h-100 position-relative">
+        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="#">
+            <div class="document-card h-100">
                 <div class="document-thumbnail">
-                    <i class="fas fa-file-{{ document.file.name|slice:'-3:' }} text-primary"></i>
+                    <i class="fas fa-file-pdf"></i>
                 </div>
                 <div class="p-4">
-                    <div class="d-flex justify-content-between mb-3">
-                        <span
-                            class="badge bg-{% if document.type_document == 'epreuve_corrigee' %}success{% else %}danger{% endif %} badge-document">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge {% if document.type_document == 'epreuve_corrigee' %}bg-success{% else %}bg-danger{% endif %} badge-document">
                             {{ document.get_type_document_display }}
                         </span>
                         <small class="text-muted">{{ document.date|date:"d M Y" }}</small>
                     </div>
                     <h5 class="fw-bold mb-2">{{ document.matiere }}</h5>
-                    <p class="text-muted mb-3">Filière {{ document.filiere }} - Spécialité {{ document.specialite }}</p>
+                    <p class="text-muted mb-3">Filière {{ document.filiere }}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{ document.file.url }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-download me-2"></i>Télécharger
+                        <a href="{{ document.file.url }}" class="download-btn text-white">
+                            <i class="fas fa-download"></i> Télécharger
                         </a>
-                        <span class="badge bg-warning text-dark">PDF • 2.4 Mo</span>
+                        <span class="badge bg-light text-dark border">PDF • {{ document.file.size|filesizeformat }}</span>
                     </div>
                 </div>
             </div>
         </div>
         {% empty %}
-        <p class="text-center text-muted">Aucune épreuve trouvée.</p>
+        <div class="col-12 empty-state" id="emptyState">
+            <i class="fas fa-folder-open"></i>
+            <h4 class="mb-3">Aucun document trouvé</h4>
+            <p class="text-muted">Essayez de modifier vos critères de recherche</p>
+            <button class="btn btn-outline-primary mt-2" onclick="resetFilters()">
+                <i class="fas fa-sync-alt me-2"></i>Réinitialiser les filtres
+            </button>
+        </div>
         {% endfor %}
     </div>
 
-
-    <!-- Plus de cartes... -->
-</div>
-
-<!-- Loading Indicator -->
-<div class="text-center py-5 d-none" id="loading">
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Chargement...</span>
+    <!-- Loading Indicator -->
+    <div class="text-center py-5 d-none" id="loading">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+        <p class="mt-3 text-muted">Chargement des documents...</p>
     </div>
-</div>
+    
+    <!-- "Voir plus" Button -->
+    <div class="text-center mt-4" id="loadMoreContainer">
+        <button class="btn btn-outline-primary px-4" id="loadMoreBtn">
+            <i class="fas fa-plus-circle me-2"></i>Voir plus de documents
+        </button>
+    </div>
 </div>
 
 <!-- Scripts -->
@@ -148,86 +260,116 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/fr.js"></script>
+
 <script>
     // Initialisation AOS
     AOS.init({
-        duration: 800,
-        once: false
+        duration: 600,
+        once: true,
+        easing: 'ease-out-quad'
+    });
+    
+    // Afficher l'état vide si nécessaire
+    $(document).ready(function() {
+        if ($('#documentsGrid').children().length <= 1) {
+            $('#emptyState').addClass('show');
+        }
+        
+        // Formater les dates avec moment.js
+        $('small.text-muted').each(function() {
+            const dateText = $(this).text();
+            $(this).text(moment(dateText, 'DD MMM YYYY').fromNow());
+        });
     });
 
-    // Filtrage Isotope
-    $(document).ready(function () {
+    // Filtrage Isotope avec animations
+    $(document).ready(function() {
         const $grid = $('#documentsGrid').isotope({
-            itemSelector: '.col',
-            layoutMode: 'fitRows'
+            itemSelector: '.col-lg-4',
+            layoutMode: 'masonry',
+            stagger: 30,
+            hiddenStyle: {
+                opacity: 0,
+                transform: 'translateY(20px)'
+            },
+            visibleStyle: {
+                opacity: 1,
+                transform: 'translateY(0)'
+            }
+        });
+        
+        // Rafraîchir Isotope après le chargement des images
+        $grid.imagesLoaded().progress(function() {
+            $grid.isotope('layout');
         });
 
         // Filtrage dynamique
-        $('#filterType, #filterSubject, #filterField').on('change', function () {
-            const type = $('#filterType').val();
-            const subject = $('#filterSubject').val();
-            const field = $('#filterField').val();
-
-            $grid.isotope({
-                filter: function () {
-                    const $this = $(this);
-                    return (!type || $this.find('.badge').text().includes(type)) &&
-                        (!subject || $this.find('h5').text().includes(subject)) &&
-                        (!field || $this.find('p').text().includes(field));
+        $('#filterType, #filterSubject, #filterField').on('change', function() {
+            $('#loading').removeClass('d-none');
+            
+            setTimeout(() => {
+                const type = $('#filterType').val();
+                const subject = $('#filterSubject').val();
+                const field = $('#filterField').val();
+                
+                $grid.isotope({
+                    filter: function() {
+                        const $this = $(this);
+                        const typeMatch = !type || $this.find('.badge').text().toLowerCase().includes(type.toLowerCase());
+                        const subjectMatch = !subject || $this.find('h5').text().toLowerCase().includes(subject.toLowerCase());
+                        const fieldMatch = !field || $this.find('p').text().toLowerCase().includes(field.toLowerCase());
+                        
+                        return typeMatch && subjectMatch && fieldMatch;
+                    }
+                });
+                
+                $('#loading').addClass('d-none');
+                
+                // Afficher/masquer l'état vide
+                if ($grid.isotope('filteredItems').length === 0) {
+                    $('#emptyState').addClass('show');
+                } else {
+                    $('#emptyState').removeClass('show');
                 }
-            });
+            }, 500);
         });
-
-        // Simulation de chargement infini
-        $(window).scroll(function () {
-            if ($(window).scrollTop() + $(window).height() > $(document).height() - 400) {
-                $('#loading').removeClass('d-none');
-                setTimeout(() => {
-                    // Ajouter ici la logique de chargement AJAX
-                    $('#loading').addClass('d-none');
-                }, 1500);
-            }
+        
+        // Simulation de chargement supplémentaire
+        $('#loadMoreBtn').click(function() {
+            const $btn = $(this);
+            $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Chargement...');
+            
+            setTimeout(() => {
+                // Ici vous feriez normalement un appel AJAX pour charger plus d'éléments
+                // Pour la démo, nous allons simplement dupliquer les éléments existants
+                const $items = $grid.find('.col-lg-4').clone();
+                $items.each(function(index) {
+                    $(this).attr('data-aos-delay', (index + 1) * 100);
+                });
+                
+                $grid.append($items).isotope('appended', $items);
+                AOS.refresh();
+                
+                $btn.prop('disabled', false).html('<i class="fas fa-plus-circle me-2"></i>Voir plus de documents');
+            }, 1500);
         });
     });
-
-    // Formatage des dates
-    $('small.text-muted').each(function () {
-        const dateText = $(this).text();
-        $(this).text(moment(dateText, 'YYYY-MM-DD').fromNow());
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        function loadDocuments() {
-            const type = $('#filterType').val();
-            const subject = $('#filterSubject').val();
-            const field = $('#filterField').val();
-
-            $.ajax({
-                url: "{% url 'epreuve' %}", // Nouvelle URL à créer dans views.py
-                type: "GET",
-                data: {
-                    type: type,
-                    subject: subject,
-                    field: field
-                },
-                beforeSend: function () {
-                    $('#loading').removeClass('d-none');
-                },
-                success: function (data) {
-                    $('#documentsGrid').html(data);
-                    $('#loading').addClass('d-none');
-                    AOS.refresh(); // Réactiver AOS après mise à jour
-                }
-            });
+    
+    // Réinitialiser les filtres
+    function resetFilters() {
+        $('#filterType, #filterSubject, #filterField').val('').trigger('change');
+    }
+    
+    // Animation au survol des cartes
+    $('.document-card').hover(
+        function() {
+            $(this).find('.document-thumbnail i').addClass('animate__animated animate__pulse');
+        },
+        function() {
+            $(this).find('.document-thumbnail i').removeClass('animate__animated animate__pulse');
         }
-
-        $('#filterType, #filterSubject, #filterField').on('change', loadDocuments);
-
-        // Charger les documents au chargement de la page
-        loadDocuments();
-    });
+    );
 </script>
-
 
 {% endblock %}

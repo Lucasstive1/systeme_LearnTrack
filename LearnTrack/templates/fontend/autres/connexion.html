@@ -223,29 +223,100 @@
         /* Style pour les messages */
         .toast-container {
             position: fixed;
-            top: 20px;
             right: 20px;
             z-index: 1050;
+            max-width: calc(100% - 40px);
+            width: auto;
+            top: 20px;
+            display: grid;
+            gap: 10px;
         }
 
         .toast {
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             max-width: 300px;
+            width: 100%;
+            margin-left: auto;
         }
 
         .toast-header {
             background-color: #3498db;
-            color: white;
+            color: rgb(0, 0, 0);
             font-weight: 600;
+            padding: 0.75rem 1rem;
         }
 
         .toast-body {
             font-size: 14px;
+            padding: 1rem;
+            color: black;
         }
 
-        .animate__animated {
-            animation-duration: 0.5s;
+        /* Animation par défaut */
+        .toast.show {
+            animation: toast-in-right 0.5s ease-out;
+        }
+
+        @keyframes toast-in-right {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 576px) {
+            .toast-container {
+                bottom: 20px;
+                top: auto;
+                right: 0;
+                left: 0;
+                max-width: 100%;
+                padding: 0 20px;
+            }
+
+            .toast {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .toast.show {
+                animation: toast-in-bottom 0.5s ease-out;
+            }
+
+            @keyframes toast-in-bottom {
+                from {
+                    transform: translateY(100%);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        /* Fermeture automatique après 5s */
+        @keyframes hideToast {
+            0% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+
+        .toast {
+            animation: hideToast 5s forwards;
         }
     </style>
 </head>
@@ -293,12 +364,11 @@
     {% if messages %}
     <div class="toast-container">
         {% for message in messages %}
-        <div class="toast show animate__animated animate__fadeInRight" role="alert" aria-live="assertive"
-            aria-atomic="true" data-bs-autohide="false">
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <i class="fas fa-info-circle me-2"></i>
                 <strong class="me-auto">Notification</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+                <button type="button" class="btn-close" onclick="this.parentElement.parentElement.remove()"></button>
             </div>
             <div class="toast-body">
                 {{ message }}
@@ -307,16 +377,6 @@
         {% endfor %}
     </div>
     {% endif %}
-
-    <!-- Activation automatique des toasts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toastElements = document.querySelectorAll('.toast');
-            toastElements.forEach(function (toastElement) {
-                new bootstrap.Toast(toastElement).show();
-            });
-        });
-    </script>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
