@@ -103,9 +103,15 @@
                 <a class="nav-link animate__animated animate__fadeInLeft delay-3" href="#">
                     <i class="fas fa-cogs me-2 text-primary"></i>Paramètres
                 </a>
-                <a class="btn btn-primary animate__animated animate__fadeInLeft delay-3" href="#">
+                {% if user.is_authenticated %}
+                <a class="btn btn-danger animate__animated animate__fadeInLeft delay-3" href="{% url 'deconnexion' %}" onclick="return confirm('Voulez-vous vraiment vous déconnecter ?');">
+                    <i class="fas fa-sign-in-alt me-2 text-light"></i>Deconnexion
+                </a>
+                {% else %}
+                <a class="btn btn-primary animate__animated animate__fadeInLeft delay-3" href="{% url 'inscription' %}">
                     <i class="fas fa-sign-in-alt me-2 text-light"></i>Inscription
                 </a>
+                {% endif %}
             </nav>
         </aside>
 

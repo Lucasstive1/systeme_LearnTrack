@@ -2,7 +2,14 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
 class CustomUser(AbstractUser):
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    ROLE_CHOICES = [
+        ('professeur', 'professeur'),
+        ('Admin', 'Admin'),
+        ('Utilisateur', 'Utilisateur'),
+    ]
+    
+    role = models.CharField(max_length=200, choices=ROLE_CHOICES, default='Utilisateur')
+    phone = models.CharField(max_length=20, unique=True, null=True)
 
     groups = models.ManyToManyField(
         Group,
